@@ -26,18 +26,18 @@ builds:
     ldflags:
       - -s -w -X version.ProviderVersion={{.Version}}
     mod_timestamp: '{{ .CommitTimestamp }}'
-checksum:
-  name_template: '{{ .ProjectName }}_{{ .Version }}_SHA256SUMS'
-  algorithm: sha256
-env:
-  - CGO_ENABLED=0
-signs:
-  - artifacts: checksum
-    args:
-      - "--batch"
-      - "--local-user"
-      - "{{ .Env.GPG_FINGERPRINT }}" # set this environment variable for your signing key
-      - "--output"
-      - "${signature}"
-      - "--detach-sign"
-      - "${artifact}"
+# checksum:
+#   name_template: '{{ .ProjectName }}_{{ .Version }}_SHA256SUMS'
+#   algorithm: sha256
+# env:
+#   - CGO_ENABLED=0
+# signs:
+#   - artifacts: checksum
+#     args:
+#       - "--batch"
+#       - "--local-user"
+#       - "{{ .Env.GPG_FINGERPRINT }}" # set this environment variable for your signing key
+#       - "--output"
+#       - "${signature}"
+#       - "--detach-sign"
+#       - "${artifact}"
