@@ -12,8 +12,6 @@
 name: release
 on:
   push:
-    branches:  
-      - feature/init
     tags:
       - 'v*'
 jobs:
