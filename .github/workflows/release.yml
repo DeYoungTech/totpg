@@ -22,10 +22,9 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v2.4.0
-      -
-        name: Unshallow
-        run: git fetch --prune --unshallow
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       -
         name: Set up Go
         uses: actions/setup-go@v2
@@ -40,12 +39,14 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
       -
         name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2.8.0
+        uses: goreleaser/goreleaser-action@v2
         with:
+          # either 'goreleaser' (default) or 'goreleaser-pro'
+          distribution: goreleaser
           version: latest
           args: release --rm-dist
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
           # GitHub sets this automatically
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_TTY: $(tty)
